@@ -1,0 +1,15 @@
+.idea
+.vscode
+.github
+
+node_modules
+src
+
+.babelrc
+.gitignore
+eslint.config.mjs-back
+package-lock.json
+postcss.config.mjs
+tailwind.config.ts
+tsconfig.json
+webpack.config.mjs
