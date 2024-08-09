@@ -1,2 +1,2 @@
-export { Tyranitar } from './components'
-export type { Music } from './components'
+export { Tyranitar } from './components';
+export type { Music } from './components';

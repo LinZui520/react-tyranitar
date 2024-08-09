@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 import Lyrics from './Lyrics';
 
 export type Music = {
@@ -16,31 +16,30 @@ type TyranitarProps = {
 };
 
 const Tyranitar = (props: TyranitarProps) => {
-
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const handleClick = () => {
-    if (!audioRef.current) return;
+    if (!audioRef.current) {
+      return;
+    }
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().then(() => {});
+      audioRef.current.play().then();
     }
     setIsPlaying(!isPlaying);
   };
 
   useEffect(() => {
-    const audioElement = audioRef.current;
-    if (!audioElement) return;
     const handleEnded = () => setIsPlaying(false);
-    audioElement.addEventListener('ended', handleEnded);
-    return () => audioElement.removeEventListener('ended', handleEnded);
+    audioRef.current?.addEventListener('ended', handleEnded);
+    return () => audioRef.current?.removeEventListener('ended', handleEnded);
   }, [audioRef.current]);
 
-  const [titleWidth, setTitleWidth] = useState(0);
+  const [titleWidth, setTitleWidth] = useState<number>(0);
   const spanRef = useRef<HTMLSpanElement>(null);
-  const [lyricsWidth, setLyricsWidth] = useState(0);
+  const [lyricsWidth, setLyricsWidth] = useState<number>(0);
 
   useEffect(() => {
     setTitleWidth(spanRef.current?.offsetWidth || 0);
@@ -51,22 +50,23 @@ const Tyranitar = (props: TyranitarProps) => {
       onClick={handleClick}
       style={{
         ...props.style,
-        width: props.size + 'px',
-        height: props.size + 'px'
+        height: `${props.size}px`,
+        width: `${props.size}px`
       }}
-      initial={{ scale: 0, opacity: 0 }}
+      initial={{ opacity: 0, scale: 0 }}
       animate={{
-        width: isPlaying
-          ? props.size + (props.music.title ? titleWidth + 2 / 5 * props.size : 0)
-            + (props.music.lyrics ? lyricsWidth + 2 * props.size : 0) + 'px'
-          : props.size + 'px',
+        opacity: 1,
         scale: 1,
-        opacity: 1
+        width: isPlaying
+          ? `${props.size + (props.music.title ? titleWidth + 2 / 5 * props.size : 0)
+            + (props.music.lyrics ? lyricsWidth + 2 * props.size : 0)}px`
+          : `${props.size}px`
       }}
       transition={{
+        damping: 10,
         duration: 0.618,
-        type: audioRef.current?.paused ? 'tween' : 'spring',
-        stiffness: 100, damping: 10
+        stiffness: 100,
+        type: audioRef.current?.paused ? 'tween' : 'spring'
       }}
       className={
         'relative select-none overflow-hidden ' +
@@ -84,8 +84,8 @@ const Tyranitar = (props: TyranitarProps) => {
       <svg
         height={props.size * 2 / 5} width={props.size * 2 / 5}
         style={{
-          left: (props.size * 3 / 10 - 2) + 'px',
-          bottom: (props.size * 3 / 10 - 2) + 'px'
+          bottom: `${props.size * 3 / 10 - 2}px`,
+          left: `${props.size * 3 / 10 - 2}px`
         }}
         xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'
         className={'absolute'}
@@ -93,10 +93,10 @@ const Tyranitar = (props: TyranitarProps) => {
         <AnimatePresence>
           <motion.path
             key={isPlaying ? 'pause' : 'play'}
-            fill={'#fbfbfd'}  opacity={0.8}
-            initial={{ scale: 0.3, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.8 }}
-            exit={{ scale: 1.7, opacity: 0 }}
+            fill={'#fbfbfd'} opacity={0.8}
+            initial={{ opacity: 0, scale: 0.3 }}
+            animate={{ opacity: 0.8, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.7 }}
             transition={{ duration: 0.618, ease: 'easeInOut' }}
             d={isPlaying
               ? 'M48 64C21.5 64 0 85.5 0 112L0 400c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48L48 64zm192 0c-26.5 0-48 21.5-48 48l0 288c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48l-32 0z'
@@ -108,14 +108,15 @@ const Tyranitar = (props: TyranitarProps) => {
 
       {props.music.title && <motion.span
         ref={spanRef}
-        initial={{ y: 0.5 * props.size, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
+        initial={{ opacity: 0, y: 0.5 * props.size }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{
+          damping: 10,
           duration: 0.618,
-          type: 'spring',
-          stiffness: 100, damping: 10
+          stiffness: 100,
+          type: 'spring'
         }}
-        style={{fontSize: (props.size * 2 / 5) + 'px', margin: (props.size / 5) + 'px'}} 
+        style={{ fontSize: `${props.size * 2 / 5}px`, margin: `${props.size / 5}px` }}
         className='text-nowrap font-light text-[#7d7d7e]'
       >
         {props.music.title}
@@ -125,7 +126,7 @@ const Tyranitar = (props: TyranitarProps) => {
         setLyricsWidth={setLyricsWidth}
         lyrics={props.music.lyrics}
         audioRef={audioRef}
-        style={{fontSize: (props.size / 3) + 'px', margin: props.size + 'px'}}
+        style={{ fontSize: `${props.size / 3}px`, margin: `${props.size}px` }}
         size={props.size}
       />}
 

@@ -1,7 +1,7 @@
 import type { Lyrics } from '../components';
 
 export const readLyrics = async (url: string): Promise<Lyrics[]> => {
-  const regex = /(\[\d{2}:\d{2}\.\d+])(.*)/;
+  const regex = /(?<time>\[\d{2}:\d{2}\.\d+\])(?<text>.*)/u;
   const text = await (await fetch(url)).text();
 
   return text.split('\n')
@@ -9,11 +9,11 @@ export const readLyrics = async (url: string): Promise<Lyrics[]> => {
     .filter(match => match !== null)
     .map(match => {
       const timeArr = match[1].slice(1, -1).split(':');
-      const seconds = 60 * parseInt(timeArr[0]) + parseFloat(timeArr[1]);
+      const seconds = 60 * parseInt(timeArr[0], 10) + parseFloat(timeArr[1]);
       return {
-        time: match[1],
+        seconds,
         text: match[2],
-        seconds
+        time: match[1],
       };
     });
 };
