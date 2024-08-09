@@ -2,20 +2,32 @@
 
 🎉这是一个简约风格的React音乐播放器组件
 
+**Tyranitar**即**班基拉斯**，是我最喜欢的宝可梦🥰
+
+
+
 ## Installation
 
 ```sh
-$ npm install react-tyranitar
+$ npm install -D react-tyranitar
 ```
+
+
 
 ## Features
 
 - 播放音乐
 - 展示歌词
 
+☝️🤓想到什么创意就加上什么创意
+
+
+
 ## Examples
 
-这是Next App的样例，因为种种原因需要禁止SSR
+[我的个人网站主页](https://www.zhuguishihundan.cn/)是一个样例😎
+
+以下是Next App的样例，因为种种原因需要禁止SSR
 
 如果是单纯的React App，直接`import { Tyranitar } from 'react-tyranitar';`使用即可
 
