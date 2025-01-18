@@ -25,7 +25,7 @@ $ npm install -D react-tyranitar
 
 ## Examples
 
-[我的个人网站主页](https://www.zhuguishihundan.cn/)是一个样例😎
+[我的个人网站主页](https://www.zhuguishihundan.com/)是一个样例😎
 
 以下是Next App的样例，因为种种原因需要禁止SSR
 
